@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleScript Compiler</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-main">
+                <h1><i class="fas fa-code"></i> SimpleScript Compiler</h1>
+                <p>A complete compiler with lexical analysis, parsing, semantic analysis, and execution</p>
+            </div>
+            <div class="header-controls">
+                <button id="themeToggle" class="theme-btn" title="Toggle Dark/Light Theme">
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+                <button id="autoCompileToggle" class="theme-btn" title="Toggle Auto-Compile">
+                    <i class="fas fa-bolt"></i> Auto-Compile
+                </button>
+                <button id="shortcutsBtn" class="theme-btn" title="Keyboard Shortcuts">
+                    <i class="fas fa-keyboard"></i> Shortcuts
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Left Column: Editor -->
+            <div class="left-column">
+                <!-- Editor Section -->
+                <div class="editor-section">
+                    <h2><i class="fas fa-edit"></i> Source Code Editor</h2>
+                    <div class="toolbar">
+                        <button id="compileBtn" class="btn btn-compile">
+                            <i class="fas fa-play"></i> Compile & Run
+                        </button>
+                        <button id="stepCompileBtn" class="btn btn-secondary">
+                            <i class="fas fa-shoe-prints"></i> Step-by-Step
+                        </button>
+                        <button id="clearBtn" class="btn btn-secondary">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button id="saveBtn" class="btn btn-secondary">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <button id="loadBtn" class="btn btn-secondary">
+                            <i class="fas fa-folder-open"></i> Load
+                        </button>
+                    </div>
+                    <div class="editor-container">
+                        <textarea id="codeEditor" class="code-editor" spellcheck="false" autocomplete="off"></textarea>
+                        <pre class="code-highlight" id="highlight"><code id="highlightCode" class="language-javascript"></code></pre>
+                    </div>
+                </div>
+
+                <!-- Sample Programs -->
+                <div class="samples-section">
+                    <h3><i class="fas fa-book"></i> Sample Programs</h3>
+                    <div class="sample-buttons">
+                        <button class="sample-btn" data-sample="hello">
+                            <i class="fas fa-globe"></i> Hello World
+                        </button>
+                        <button class="sample-btn" data-sample="arithmetic">
+                            <i class="fas fa-calculator"></i> Arithmetic
+                        </button>
+                        <button class="sample-btn" data-sample="loop">
+                            <i class="fas fa-redo"></i> Loop Example
+                        </button>
+                        <button class="sample-btn" data-sample="function">
+                            <i class="fas fa-function"></i> Function Demo
+                        </button>
+                        <button class="sample-btn" data-sample="conditional">
+                            <i class="fas fa-code-branch"></i> Conditionals
+                        </button>
+                        <button class="sample-btn" data-sample="factorial">
+                            <i class="fas fa-th"></i> Factorial
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Pipeline + Output -->
+            <div class="right-column">
+                <!-- Compilation Pipeline Visualization -->
+                <div class="pipeline-section">
+                    <h2><i class="fas fa-project-diagram"></i> Compilation Pipeline</h2>
+                    <div class="pipeline-steps">
+                        <div class="step" data-step="lexer">
+                            <div class="step-icon"><i class="fas fa-font"></i></div>
+                            <div class="step-title">Lexical Analysis</div>
+                            <div class="step-status">Ready</div>
+                            <div class="step-progress"></div>
+                        </div>
+                        <div class="step-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="step" data-step="parser">
+                            <div class="step-icon"><i class="fas fa-tree"></i></div>
+                            <div class="step-title">Syntax Analysis</div>
+                            <div class="step-status">Ready</div>
+                            <div class="step-progress"></div>
+                        </div>
+                        <div class="step-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="step" data-step="semantic">
+                            <div class="step-icon"><i class="fas fa-search"></i></div>
+                            <div class="step-title">Semantic Analysis</div>
+                            <div class="step-status">Ready</div>
+                            <div class="step-progress"></div>
+                        </div>
+                        <div class="step-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="step" data-step="interpreter">
+                            <div class="step-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="step-title">Execution</div>
+                            <div class="step-status">Ready</div>
+                            <div class="step-progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs for Output -->
+                <div class="output-section">
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="output">
+                            <i class="fas fa-terminal"></i> Output
+                        </button>
+                        <button class="tab-button" data-tab="tokens">
+                            <i class="fas fa-font"></i> Tokens
+                        </button>
+                        <button class="tab-button" data-tab="ast">
+                            <i class="fas fa-project-diagram"></i> AST
+                        </button>
+                        <button class="tab-button" data-tab="errors">
+                            <i class="fas fa-exclamation-triangle"></i> Errors
+                        </button>
+                        <button class="tab-button" data-tab="preview">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                    </div>
+
+                    <!-- Output Tab -->
+                    <div class="tab-content active" id="output-tab">
+                        <div class="output-header">
+                            <h3><i class="fas fa-terminal"></i> Program Output</h3>
+                            <button id="copyOutputBtn" class="copy-btn" title="Copy Output">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <pre id="output" class="output-box">Ready to compile...</pre>
+                    </div>
+
+                    <!-- Tokens Tab -->
+                    <div class="tab-content" id="tokens-tab">
+                        <h3><i class="fas fa-font"></i> Tokens (Lexical Analysis)</h3>
+                        <div class="token-list" id="tokenList">
+                            <p>Tokens will appear here after compilation</p>
+                        </div>
+                    </div>
+
+                    <!-- AST Tab -->
+                    <div class="tab-content" id="ast-tab">
+                        <div class="ast-header">
+                            <h3><i class="fas fa-project-diagram"></i> Abstract Syntax Tree</h3>
+                            <button id="copyAstBtn" class="copy-btn" title="Copy AST">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <pre id="ast" class="output-box">AST will appear here after parsing</pre>
+                    </div>
+
+                    <!-- Errors Tab -->
+                    <div class="tab-content" id="errors-tab">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Compilation Errors</h3>
+                        <pre id="errors" class="output-box error-box">No errors</pre>
+                    </div>
+
+                    <!-- Preview Tab -->
+                    <div class="tab-content" id="preview-tab">
+                        <h3><i class="fas fa-eye"></i> Real-time Preview</h3>
+                        <div class="preview-container">
+                            <div class="preview-section">
+                                <h4><i class="fas fa-font"></i> Lexical Preview</h4>
+                                <div id="lexicalPreview" class="preview-box">Start typing to see tokens...</div>
+                            </div>
+                            <div class="preview-section">
+                                <h4><i class="fas fa-project-diagram"></i> Parse Preview</h4>
+                                <div id="parsePreview" class="preview-box">Start typing to see AST...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="docs-section">
+            <h3><i class="fas fa-book-open"></i> Language Guide</h3>
+            <div class="docs-grid">
+                <div class="doc-item">
+                    <h4><i class="fas fa-cube"></i> Data Types</h4>
+                    <code>int, float, string, boolean</code>
+                </div>
+                <div class="doc-item">
+                    <h4><i class="fas fa-calculator"></i> Operators</h4>
+                    <code>+, -, *, /, %, ==, !=, <, >, and, or, not</code>
+                </div>
+                <div class="doc-item">
+                    <h4><i class="fas fa-key"></i> Keywords</h4>
+                    <code>var, function, if, else, for, while, return, print, input</code>
+                </div>
+                <div class="doc-item">
+                    <h4><i class="fas fa-comment"></i> Comments</h4>
+                    <code>// Single line comment</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shortcuts Modal -->
+    <div id="shortcutsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h2>
+                <button id="closeModal" class="close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>Enter</kbd>
+                    <span>Compile & Run</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd>
+                    <span>Step-by-Step Compile</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Tab</kbd>
+                    <span>Insert Tab in Editor</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>S</kbd>
+                    <span>Save Code</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for loading -->
+    <input type="file" id="fileInput" style="display: none;" accept=".simple">
+
+    <script src="script.js"></script>
+</body>
+</html>

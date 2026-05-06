@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleScript Compiler - Select Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ecf0f1;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 90%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #00bcd4;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #bdc3c7;
+        }
+
+        .interfaces {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .interfaces {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .interface-card {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border: 2px solid #00bcd4;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .interface-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
+            border-color: #26c6da;
+        }
+
+        .interface-icon {
+            font-size: 3em;
+        }
+
+        .interface-card h2 {
+            color: #00bcd4;
+            font-size: 1.8em;
+        }
+
+        .interface-card p {
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+
+        .features {
+            background: rgba(0, 188, 212, 0.1);
+            border-left: 3px solid #00bcd4;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+
+        .features li {
+            margin: 5px 0;
+            color: #95a5a6;
+        }
+
+        .features li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            background: #00bcd4;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background: #26c6da;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            color: #95a5a6;
+            padding: 20px;
+            border-top: 1px solid #2c3e50;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .status {
+            background: rgba(39, 174, 96, 0.2);
+            border: 1px solid #27ae60;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            color: #27ae60;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 SimpleScript Compiler</h1>
+            <p>Choose your interface</p>
+        </div>
+
+        <div class="status">
+            ✅ Server is running and ready! Select an interface below to start coding.
+        </div>
+
+        <div class="interfaces">
+            <!-- Professional Edition -->
+            <a href="pro.html" class="interface-card">
+                <div class="interface-icon">💼</div>
+                <h2>Professional Edition</h2>
+                <p>Advanced compiler interface with powerful features for serious development</p>
+                <div class="features">
+                    <ul>
+                        <li>3-Column professional layout</li>
+                        <li>Real-time token analysis</li>
+                        <li>Complete AST visualization</li>
+                        <li>Step-by-step compilation</li>
+                        <li>Dark/Light theme toggle</li>
+                        <li>Compilation statistics</li>
+                        <li>Error reporting system</li>
+                    </ul>
+                </div>
+                <button class="cta-button">Open Professional →</button>
+            </a>
+
+            <!-- Educational Edition -->
+            <a href="index.html" class="interface-card">
+                <div class="interface-icon">📚</div>
+                <h2>Educational Edition</h2>
+                <p>Feature-rich interface designed for learning compiler concepts</p>
+                <div class="features">
+                    <ul>
+                        <li>Visual pipeline diagram</li>
+                        <li>Real-time preview pane</li>
+                        <li>Comprehensive documentation</li>
+                        <li>Sample programs included</li>
+                        <li>Interactive tutorials</li>
+                        <li>Detailed explanations</li>
+                        <li>Learning mode</li>
+                    </ul>
+                </div>
+                <button class="cta-button">Open Educational →</button>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p><strong>SimpleScript Compiler v2.0</strong></p>
+            <p>Complete lexer, parser, semantic analyzer, and interpreter</p>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #7f8c8d;">
+                Server running on <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">localhost:5000</code> • 
+                <a href="#" style="color: #00bcd4; text-decoration: none;">Keyboard Shortcuts</a> • 
+                <a href="#" style="color: #00bcd4; text-decoration: none;">Language Guide</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

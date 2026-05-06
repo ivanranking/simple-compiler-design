@@ -1,0 +1,19 @@
+// Function Demo
+// Demonstrates function declaration and calling
+
+function add(x, y) {
+    return x + y;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+print("Function Demonstrations");
+print("======================");
+
+var result1 = add(10, 20);
+print("add(10, 20) = ", result1);
+
+var result2 = multiply(7, 8);
+print("multiply(7, 8) = ", result2);

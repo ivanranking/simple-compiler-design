@@ -1,0 +1,21 @@
+// Factorial Calculator
+// Demonstrates recursion with functions
+
+function factorial(n) {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+print("Factorial Calculator");
+print("====================");
+
+var num = 5;
+var result = factorial(num);
+
+print(num, "! = ", result);
+
+var result2 = factorial(6);
+print("6! = ", result2);

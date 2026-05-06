@@ -1,0 +1,14 @@
+// While Loop Example
+// Demonstrates while loop
+
+var counter = 5;
+
+print("While Loop - Countdown");
+print("======================");
+
+while (counter > 0) {
+    print("Countdown: ", counter);
+    counter = counter - 1;
+}
+
+print("Blast off!");

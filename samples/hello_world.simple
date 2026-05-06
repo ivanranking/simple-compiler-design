@@ -1,0 +1,5 @@
+// Hello World - Basic Program
+// This is the simplest example showing print statement
+
+print("Hello, World!");
+print("Welcome to SimpleScript Compiler!");

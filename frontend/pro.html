@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleScript Compiler - Professional Edition</title>
+    <link rel="stylesheet" href="style-pro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <h1 class="logo">SimpleScript Compiler</h1>
+        </div>
+        <div class="navbar-right">
+            <button id="themeTogglePro" class="nav-btn" title="Toggle Dark/Light Theme">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <button id="settingsBtn" class="nav-btn" title="Settings">
+                ⚙️
+            </button>
+            <button id="helpBtn" class="nav-btn" title="Help">
+                ❓
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Toolbar -->
+        <div class="toolbar-pro">
+            <div class="toolbar-group">
+                <button id="compileProBtn" class="btn-primary">
+                    ▶ Run Code
+                </button>
+                <button id="stepProBtn" class="btn-secondary">
+                    👣 Step-by-Step
+                </button>
+                <button id="clearProBtn" class="btn-secondary">
+                    🗑️ Clear
+                </button>
+            </div>
+            <div class="toolbar-group">
+                <button id="saveProBtn" class="btn-secondary">
+                    💾 Save
+                </button>
+                <button id="loadProBtn" class="btn-secondary">
+                    📂 Load
+                </button>
+                <select id="sampleSelect" class="dropdown">
+                    <option value="">Load Sample Program...</option>
+                    <option value="hello">Hello World</option>
+                    <option value="arithmetic">Arithmetic Operations</option>
+                    <option value="loop">For Loop</option>
+                    <option value="function">Function</option>
+                    <option value="conditional">Conditionals</option>
+                    <option value="factorial">Factorial</option>
+                    <option value="nested">Nested Loops</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Content Area - 3 Column Layout -->
+        <div class="editor-area">
+            <!-- LEFT COLUMN: CODE EDITOR -->
+            <div class="column column-code">
+                <div class="column-header">
+                    <span class="column-title">📝 Code Editor</span>
+                    <div class="column-actions">
+                        <button class="col-action" id="formatCode" title="Format Code">
+                            ⚙️
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <textarea id="codeEditorPro" class="code-editor" spellcheck="false" autocomplete="off"></textarea>
+                    <pre class="code-highlight" id="highlightPro"><code id="highlightCodePro" class="language-javascript"></code></pre>
+                </div>
+                <div class="editor-stats">
+                    <span id="lineCount">Lines: 0</span>
+                    <span id="charCount">Chars: 0</span>
+                </div>
+            </div>
+
+            <!-- MIDDLE COLUMN: COMPILATION PIPELINE & ANALYSIS -->
+            <div class="column column-analysis">
+                <!-- Pipeline -->
+                <div class="pipeline-card">
+                    <div class="card-header">
+                        <span class="card-title">🔄 Compilation Pipeline</span>
+                    </div>
+                    <div class="pipeline">
+                        <div class="pipeline-step" data-step="lexer">
+                            <div class="pipeline-icon">🔤</div>
+                            <div class="pipeline-step-name">Lexer</div>
+                            <div class="pipeline-status">●</div>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step" data-step="parser">
+                            <div class="pipeline-icon">🌳</div>
+                            <div class="pipeline-step-name">Parser</div>
+                            <div class="pipeline-status">●</div>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step" data-step="semantic">
+                            <div class="pipeline-icon">🔍</div>
+                            <div class="pipeline-step-name">Semantic</div>
+                            <div class="pipeline-status">●</div>
+                        </div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step" data-step="interpreter">
+                            <div class="pipeline-icon">⚡</div>
+                            <div class="pipeline-step-name">Exec</div>
+                            <div class="pipeline-status">●</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Tabs -->
+                <div class="analysis-tabs">
+                    <div class="tab-nav">
+                        <button class="tab-nav-btn active" data-analysis="tokens">
+                            🔤 Tokens
+                        </button>
+                        <button class="tab-nav-btn" data-analysis="ast">
+                            🌳 AST
+                        </button>
+                        <button class="tab-nav-btn" data-analysis="errors">
+                            ⚠️ Errors
+                        </button>
+                    </div>
+                    <div class="analysis-content">
+                        <!-- Tokens -->
+                        <div class="analysis-pane active" data-analysis="tokens">
+                            <div id="tokensPro" class="analysis-box">
+                                <p class="empty-msg">Compile to see tokens...</p>
+                            </div>
+                        </div>
+                        <!-- AST -->
+                        <div class="analysis-pane" data-analysis="ast">
+                            <pre id="astPro" class="analysis-box"><p class="empty-msg">Compile to see AST...</p></pre>
+                        </div>
+                        <!-- Errors -->
+                        <div class="analysis-pane" data-analysis="errors">
+                            <pre id="errorsPro" class="analysis-box error-box"><p class="empty-msg">No errors</p></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: OUTPUT & CONSOLE -->
+            <div class="column column-output">
+                <div class="column-header">
+                    <span class="column-title">📤 Output / Console</span>
+                    <div class="column-actions">
+                        <button class="col-action" id="copyOutput" title="Copy Output">
+                            📋
+                        </button>
+                        <button class="col-action" id="clearOutput" title="Clear Output">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+                <div class="output-container">
+                    <pre id="outputPro" class="output-box">Ready to compile...</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Panel: Info & Details -->
+        <div class="bottom-panel">
+            <div class="info-group">
+                <div class="info-item">
+                    <span class="info-label">Status:</span>
+                    <span id="compilationStatus" class="info-value ready">Ready</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Time:</span>
+                    <span id="compilationTime" class="info-value">0ms</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Tokens:</span>
+                    <span id="tokenCount" class="info-value">0</span>
+                </div>
+            </div>
+            <div class="documentation-links">
+                <a href="#" onclick="showLanguageGuide()">Language Guide</a> | 
+                <a href="#" onclick="showKeyboardShortcuts()">Keyboard Shortcuts</a> | 
+                <a href="#" onclick="showAbout()">About</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="languageGuideModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>SimpleScript Language Guide</h2>
+                <button class="close-btn" onclick="closeModal('languageGuideModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Data Types</h3>
+                <p><code>int</code>, <code>float</code>, <code>string</code>, <code>boolean</code></p>
+
+                <h3>Keywords</h3>
+                <p><code>var</code>, <code>function</code>, <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>return</code>, <code>print</code>, <code>input</code>, <code>true</code>, <code>false</code></p>
+
+                <h3>Operators</h3>
+                <p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>and</code>, <code>or</code>, <code>not</code></p>
+
+                <h3>Example</h3>
+                <pre>var x = 10;
+var y = 20;
+if (x < y) {
+    print("x is less than y");
+}
+
+function greet(name) {
+    print("Hello, ", name);
+}
+greet("World");</pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="keyboardShortcutsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keyboard Shortcuts</h2>
+                <button class="close-btn" onclick="closeModal('keyboardShortcutsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="shortcuts-table">
+                    <tr>
+                        <td><kbd>Ctrl</kbd> + <kbd>Enter</kbd></td>
+                        <td>Compile & Run</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd></td>
+                        <td>Step-by-Step Compilation</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>Ctrl</kbd> + <kbd>S</kbd></td>
+                        <td>Save Code</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>Ctrl</kbd> + <kbd>L</kbd></td>
+                        <td>Load Code</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd></td>
+                        <td>Clear All</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>About SimpleScript Compiler</h2>
+                <button class="close-btn" onclick="closeModal('aboutModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Professional Compiler Interface</h3>
+                <p>A complete, educational compiler with:</p>
+                <ul>
+                    <li>✅ Lexical Analysis (Tokenization)</li>
+                    <li>✅ Syntax Analysis (Parsing)</li>
+                    <li>✅ Semantic Analysis (Type Checking)</li>
+                    <li>✅ Code Execution (Interpretation)</li>
+                    <li>✅ Real-time Error Reporting</li>
+                    <li>✅ Step-by-Step Compilation</li>
+                </ul>
+                <p><strong>Version:</strong> 2.0 Professional Edition</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="fileInputPro" style="display: none;" accept=".simple">
+
+    <script src="script-pro.js"></script>
+</body>
+</html>

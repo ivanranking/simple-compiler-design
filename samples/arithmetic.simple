@@ -1,0 +1,15 @@
+// Arithmetic Operations
+// Demonstrates variables and all arithmetic operators
+
+var a = 15;
+var b = 4;
+
+print("Arithmetic Operations");
+print("====================");
+print("a = ", a);
+print("b = ", b);
+print("a + b = ", a + b);
+print("a - b = ", a - b);
+print("a * b = ", a * b);
+print("a / b = ", a / b);
+print("a % b = ", a % b);
