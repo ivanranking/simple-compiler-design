@@ -1,6 +1,6 @@
 // Professional SimpleScript Compiler JavaScript
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 
 // Sample programs
 const samples = {
@@ -138,19 +138,26 @@ function updateHighlight() {
 
     let code = editor.value;
 
+    // Escape HTML first to prevent raw tags from being rendered
+    code = code.replace(/&/g, '&amp;')
+               .replace(/</g, '&lt;')
+               .replace(/>/g, '&gt;')
+               .replace(/"/g, '&quot;')
+               .replace(/'/g, '&#039;');
+
     // Keyword highlighting
     code = code.replace(/\b(var|function|if|else|for|while|break|continue|return|print|input|true|false|and|or|not)\b/g, 
         '<span style="color: #569cd6;">$1</span>');
     
-    // String highlighting
-    code = code.replace(/"[^"]*"/g, match => `<span style="color: #ce9178;">${match}</span>`);
-    code = code.replace(/'[^']*'/g, match => `<span style="color: #ce9178;">${match}</span>`);
+    // String highlighting - match escaped quote entities
+    code = code.replace(/&quot;([^"]*)&quot;/g, '<span style="color: #ce9178;">&quot;$1&quot;</span>');
+    code = code.replace(/&#039;([^']*)&#039;/g, '<span style="color: #ce9178;">&#039;$1&#039;</span>');
     
     // Number highlighting
-    code = code.replace(/\b\d+\b/g, match => `<span style="color: #b5cea8;">${match}</span>`);
+    code = code.replace(/\b\d+\b/g, '<span style="color: #b5cea8;">$&</span>');
     
     // Comment highlighting
-    code = code.replace(/\/\/.*$/gm, match => `<span style="color: #6a9955;">${match}</span>`);
+    code = code.replace(/\/\/.*$/gm, '<span style="color: #6a9955;">$&</span>');
 
     highlight.innerHTML = code;
 }

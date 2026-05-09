@@ -241,16 +241,8 @@ class Interpreter:
     
     def visit_input_stmt(self, stmt: InputStmt):
         """Visit input statement"""
-        user_input = input()
-        # Try to convert to number
-        try:
-            if '.' in user_input:
-                value = float(user_input)
-            else:
-                value = int(user_input)
-        except ValueError:
-            value = user_input
-        self.set_variable(stmt.variable, value)
+        self.output_callback(f"Input requested for '{stmt.variable}' - not supported in web mode")
+        self.set_variable(stmt.variable, "")
     
     # Expression visitors
     def visit_expression(self, expr: Expression) -> Any:

@@ -421,14 +421,15 @@ body.dark-theme .toolbar {
     border: none;
     resize: none;
     background: transparent;
-    color: #333;
+    color: transparent;
+    caret-color: #333;
     z-index: 2;
     outline: none;
     tab-size: 4;
 }
 
 body.dark-theme .code-editor {
-    color: #e0e0e0;
+    caret-color: #e0e0e0;
 }
 
 .code-highlight {

@@ -498,7 +498,7 @@ class Parser:
         
         if self.match(TokenType.INTEGER):
             value = self.advance().value
-            return Literal(value, 'integer')
+            return Literal(value, 'int')
         
         elif self.match(TokenType.FLOAT):
             value = self.advance().value

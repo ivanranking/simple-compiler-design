@@ -1,6 +1,6 @@
 // SimpleScript Compiler Frontend
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 
 // Sample Programs
 const samples = {
@@ -112,11 +112,18 @@ function updateHighlight() {
 
     let code = editor.value;
 
+    // Escape HTML first to prevent raw tags from being rendered
+    code = code.replace(/&/g, '&amp;')
+               .replace(/</g, '&lt;')
+               .replace(/>/g, '&gt;')
+               .replace(/"/g, '&quot;')
+               .replace(/'/g, '&#039;');
+
     code = code.replace(/\b(var|function|if|else|for|while|break|continue|return|print|input|true|false|and|or|not)\b/g, '<span class="hljs-keyword">$1</span>');
-    code = code.replace(/"[^"]*"/g, match => `<span class="hljs-string">${match}</span>`);
-    code = code.replace(/'[^']*'/g, match => `<span class="hljs-string">${match}</span>`);
-    code = code.replace(/\b\d+\b/g, match => `<span class="hljs-number">${match}</span>`);
-    code = code.replace(/\/\/.*$/gm, match => `<span style="color: #6a9955;">${match}</span>`);
+    code = code.replace(/&quot;([^"]*)&quot;/g, '<span class="hljs-string">&quot;$1&quot;</span>');
+    code = code.replace(/&#039;([^']*)&#039;/g, '<span class="hljs-string">&#039;$1&#039;</span>');
+    code = code.replace(/\b\d+\b/g, '<span class="hljs-number">$&</span>');
+    code = code.replace(/\/\/.*$/gm, '<span style="color: #6a9955;">$&</span>');
 
     highlight.innerHTML = code;
 }

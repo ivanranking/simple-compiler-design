@@ -245,7 +245,8 @@ body {
     font-size: 13px;
     border: none;
     background: transparent;
-    color: #d4d4d4;
+    color: transparent;
+    caret-color: #d4d4d4;
     z-index: 2;
     outline: none;
     resize: none;
